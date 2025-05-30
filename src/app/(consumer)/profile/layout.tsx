@@ -1,6 +1,4 @@
 import { UserProfile } from "@clerk/nextjs";
-import { Suspense } from "react";
-import CustomPages from "./custom-page/page";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -26,13 +24,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const ResumeClientWrapper = () => {
-  return (
-    <Suspense fallback={<div>Loading resume...</div>}>
-      <CustomPages />
-    </Suspense>
-  );
-};
 const DotIcon = () => {
   return (
     <svg
@@ -49,14 +40,6 @@ const DotIcon = () => {
 export default function ProfileLayout() {
   return (
     <UserProfile path="/profile" routing="path">
-      <UserProfile.Page
-        label="Custom Page"
-        labelIcon={<DotIcon />}
-        url="custom-page"
-      >
-        <ResumeClientWrapper />
-      </UserProfile.Page>
-
       {/* You can also pass the content as direct children */}
       <UserProfile.Page label="Terms" labelIcon={<DotIcon />} url="terms">
         <div>

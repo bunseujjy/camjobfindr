@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import AdditionalUpdate from "./AdditionalUpdate";
 import { Metadata } from "next";
 
@@ -26,7 +26,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 const Additional = () => {
-  return <AdditionalUpdate />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AdditionalUpdate />
+    </Suspense>
+  );
 };
 
 export default Additional;

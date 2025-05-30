@@ -136,7 +136,7 @@ const JobCard = ({ job_db, feature_jobs, user, isApplied }: JobType) => {
           </div>
           <span className="text-sm text-gray-500">
             {formatDate(
-              job_db?.createdAt.toDateString() || feature_jobs?.date_published
+              job_db?.createdAt.toString() || feature_jobs?.date_published
             )}
           </span>
         </div>

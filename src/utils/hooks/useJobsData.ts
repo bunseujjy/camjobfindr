@@ -5,7 +5,7 @@ import { fetchDBJob } from "@/features/job/actions/job";
 export const useJobsData = () => {
     return useQuery({
         queryKey: ['feature-job'],
-        queryFn: fetchJob,
+        queryFn: () => fetchJob(),
         staleTime: 360000,
         gcTime: 360000,
         retry: 3, // Retry failed requests 3 times
@@ -16,7 +16,7 @@ export const useJobsData = () => {
 export const useJobsDataFromDB = () => {
     return useQuery({
         queryKey: ['job-from-database'],
-        queryFn: fetchDBJob,
+        queryFn: () => fetchDBJob(),
         staleTime: 360000,
         gcTime: 360000,
         retry: 3, // Retry failed requests 3 times

@@ -11,15 +11,14 @@ import { FileText, LogIn } from "lucide-react";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const url = `${process.env.BASE_URL}/resume`;
   return {
     title: "Resumes",
     alternates: {
-      canonical: url,
+      canonical: `${process.env.BASE_URL}/resume`,
     },
     openGraph: {
       type: "website",
-      url: url,
+      url: `${process.env.BASE_URL}/resume`,
       title: "Your resume listed here.",
       siteName: "CamJobFindr",
       images: [
@@ -77,11 +76,7 @@ const ResumePage = async () => {
     },
   });
 
-  return (
-    <>
-      <ResumeListingPage resumeData={resumeData as ResumeData[]} />
-    </>
-  );
+  return <ResumeListingPage resumeData={resumeData as ResumeData[]} />;
 };
 
 export default ResumePage;

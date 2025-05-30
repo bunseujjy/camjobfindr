@@ -1,7 +1,7 @@
 "use server";
 
 export const fetchJob = async () => {
-  const url = "http://localhost:3000/job_data.json";
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/job_data.json`;
   
   try {
     const response = await fetch(url, {

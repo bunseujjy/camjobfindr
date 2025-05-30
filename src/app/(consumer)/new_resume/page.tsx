@@ -1,5 +1,5 @@
 import ResumeEditor from "@/features/resume/db/component/ResumeEditor";
-import React from "react";
+import React, { Suspense } from "react";
 import { db } from "@/drizzle/db";
 import { ResumeTable, UserTable } from "@/drizzle/schema";
 import { and, eq } from "drizzle-orm";
@@ -63,7 +63,11 @@ const NewResume = async ({ searchParams }: ResumeProps) => {
         },
       })
     : null;
-  return <ResumeEditor resumeData={resumeData as ResumeData | null} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResumeEditor resumeData={resumeData as ResumeData | null} />
+    </Suspense>
+  );
 };
 
 export default NewResume;

@@ -1,3 +1,5 @@
+"use cache";
+
 import { getAllJob, getJob } from "@/features/job/actions/job";
 import { getCurrentUser } from "@/services/clerk";
 import JobComponent from "./JobComponent";
@@ -10,8 +12,7 @@ export async function generateMetadata(props: {
   const params = await props.params;
   const id = params.id;
   const url = `${process.env.BASE_URL}/job/${id}`;
-  const { userId } = await getCurrentUser({ allData: true });
-  const jobs = await getJob(userId as string);
+  const jobs = await getJob();
   const job = jobs.find((j) => j.job_posting.id === id);
   return {
     title: `${job?.job_posting.job_title}`,
@@ -39,7 +40,7 @@ const JobPage = async (props: { params: Promise<{ id: string }> }) => {
   const params = await props.params;
   const id = params.id;
   const { userId, user } = await getCurrentUser({ allData: true });
-  const jobs = await getJob(userId as string);
+  const jobs = await getJob();
   const job = jobs.find((j) => j.job_posting.id === id);
   const all_jobs = await getAllJob();
   return (

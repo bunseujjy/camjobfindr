@@ -29,8 +29,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function OnboardingPage() {
   const user = await getCurrentUser({ allData: true });
+  if (!user) {
+    return null;
+  }
   return (
-    <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
       <OnboardingOptions user={user} />
     </Suspense>
   );

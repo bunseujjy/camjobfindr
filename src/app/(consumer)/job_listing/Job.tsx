@@ -213,7 +213,7 @@ export default function UserJobsPage({ job, all_jobs, user }: JobListingProps) {
                             : "Completed"}
                         </Badge>
                         <span className="text-sm text-muted-foreground">
-                          {job.job_posting.createdAt.toDateString()}
+                          {job.job_posting.createdAt.toString()}
                         </span>
                       </div>
                       <CardTitle className="text-xl">
@@ -294,7 +294,7 @@ export default function UserJobsPage({ job, all_jobs, user }: JobListingProps) {
                       <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between gap-2">
                         <div className="text-sm text-right">
                           <div className="text-muted-foreground">
-                            {job.job_posting.createdAt.toDateString()}
+                            {job.job_posting.createdAt.toString()}
                           </div>
                           <div>
                             <span className="font-medium">18</span> applicants

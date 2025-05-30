@@ -1,11 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import NewJob from "./NewJob";
 import { CompanyTable, CompanyUserTable } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 import { db } from "@/drizzle/db";
-import { cacheTag } from "next/dist/server/use-cache/cache-tag";
-import { getCompanyIdTag } from "@/features/company/db/cache";
-import { getUserIdTag } from "@/features/users/db/cache";
 import { getCurrentUser } from "@/services/clerk";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
@@ -36,7 +33,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 async function getCompany(userId: string) {
   "use cache";
-  cacheTag(getCompanyIdTag(userId), getUserIdTag(userId));
   const company = await db
     .select({
       userId: CompanyUserTable.userId,
@@ -59,7 +55,11 @@ const NewListingPage = async () => {
   if (company?.find((c) => c.userId !== userId) || !company) {
     redirect("/onboarding");
   }
-  return <NewJob companies={company} userId={userId} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <NewJob companies={company} userId={userId} />
+    </Suspense>
+  );
 };
 
 export default NewListingPage;

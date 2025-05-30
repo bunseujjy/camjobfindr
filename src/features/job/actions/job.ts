@@ -4,15 +4,11 @@ import { z } from "zod";
 import { jobSchema } from "../schema/jobSchema";
 import { insertJob, updatingJob } from "../db/job";
 import { db } from "@/drizzle/db";
-import {  getUserJobTag } from "../db/cache";
-import { getUserCompanyTag,} from "@/features/company/db/cache";
 import {
   CompanyTable,
   JobPostingTable,
 } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
-import { unstable_cacheTag as cacheTag } from 'next/cache'
-import { unstable_cacheLife as cacheLife } from 'next/cache'
 
 export async function createJob(unsafeData: z.infer<typeof jobSchema>) {
   const { success, data } = jobSchema.safeParse(unsafeData);
@@ -45,7 +41,7 @@ export async function fetchDBJob() {
     if (!data) {
       throw new Error("Job not found");
     }
-    return data;
+    return JSON.parse(JSON.stringify(data)); // Convert to plain object
   } catch (error) {
     console.error(error);
   }
@@ -62,16 +58,14 @@ export async function getJobById(jobId: string) {
 }
 
 
-export async function getJob(userId: string) {
+export async function getJob() {
   "use cache";
-  cacheTag(getUserJobTag(userId), getUserCompanyTag(userId));
 
   const job = await db
     .select()
     .from(JobPostingTable)
     .leftJoin(CompanyTable, eq(JobPostingTable.companyId, CompanyTable.id));
 
-  cacheLife('hours')
   return job;
 }
 

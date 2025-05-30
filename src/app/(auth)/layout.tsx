@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 export default async function AuthLayout({
   children,
@@ -7,7 +7,7 @@ export default async function AuthLayout({
 }) {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      {children}
+      <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
     </div>
   );
 }

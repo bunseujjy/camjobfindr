@@ -1,8 +1,4 @@
-"use client";
-
 import { UserProfile } from "@clerk/nextjs";
-import CustomPages from "../custom-page/page";
-import { Suspense } from "react";
 
 const DotIcon = () => {
   return (
@@ -16,26 +12,8 @@ const DotIcon = () => {
   );
 };
 
-// Create a client wrapper component
-const ResumeClientWrapper = () => {
-  return (
-    <Suspense fallback={<div>Loading resume...</div>}>
-      <CustomPages />
-    </Suspense>
-  );
-};
-
 const UserProfilePage = () => (
   <UserProfile path="/profile" routing="path">
-    {/* You can pass the content as a component */}
-    <UserProfile.Page
-      label="Custom Page"
-      labelIcon={<DotIcon />}
-      url="custom-page"
-    >
-      <ResumeClientWrapper />
-    </UserProfile.Page>
-
     {/* You can also pass the content as direct children */}
     <UserProfile.Page label="Terms" labelIcon={<DotIcon />} url="terms">
       <div>
