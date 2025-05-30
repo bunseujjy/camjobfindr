@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { db } from "@/drizzle/db";
 import { CompanyTable, JobPostingTable, UserTable } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
@@ -43,9 +43,9 @@ const JobListingPage = async () => {
     const [job, all_jobs] = await Promise.all([getJob(), getAllJob(userId)]);
 
     return (
-      <div>
+      <Suspense fallback={<div>Loading...</div>}>
         <UserJobsPage job={job} all_jobs={all_jobs} user={user} />
-      </div>
+      </Suspense>
     );
   } catch (error) {
     console.error("Error fetching job data:", error);

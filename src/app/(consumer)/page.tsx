@@ -7,23 +7,26 @@ import ProcessSection from "../components/Home/ProcessSection";
 import ReviewSection from "../components/Home/ReviewSection";
 import { fetchApplicant } from "@/features/applicant/db/applicant";
 import { ApplicantType } from "@/features/applicant/types/job_type";
+import { Suspense } from "react";
 
 export default async function Home() {
   const { user } = await getCurrentUser({ allData: true });
   const applicant = await fetchApplicant(user?.id as string);
   return (
-    <div className="w-full h-full overflow-hidden">
-      <Hero language="en" />
-      <div className="px-4">
-        <ExploreSection language="en" />
-        <FeatureJobs
-          user={user}
-          applicant={applicant as unknown as ApplicantType[]}
-        />
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="w-full h-full overflow-hidden">
+        <Hero language="en" />
+        <div className="px-4">
+          <ExploreSection language="en" />
+          <FeatureJobs
+            user={user}
+            applicant={applicant as unknown as ApplicantType[]}
+          />
+        </div>
+        <ProcessSection />
+        <ReviewSection />
+        <FooterSection />
       </div>
-      <ProcessSection />
-      <ReviewSection />
-      <FooterSection />
-    </div>
+    </Suspense>
   );
 }
