@@ -9,6 +9,7 @@ export const db = drizzle({
         user: env.DB_USER,
         database: env.DB_NAME,
         host: env.DB_HOST,
-        url: env.DATABASE_URL
+        url: env.DATABASE_URL,
+        ssl: true
     }
 })
