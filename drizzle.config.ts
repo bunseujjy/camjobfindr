@@ -13,6 +13,6 @@ export default defineConfig({
     password: process.env.DB_PASSWORD!,
     database: process.env.DB_NAME!,
     port: Number(process.env.DB_PORT ?? 5432),
-    ssl: true, // likely needed in production (like Supabase or Neon)
+    ssl: { rejectUnauthorized: false }
   },
 });
